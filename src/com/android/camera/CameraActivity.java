@@ -1535,6 +1535,13 @@ public class CameraActivity extends QuickActivity
         profile.mark("computePictureSizes");
         Keys.setDefaults(mSettingsManager, mAppContext);
 
+        // Always start with the back camera.
+        for (ModuleManagerImpl.ModuleAgent agent : mModuleManager.getRegisteredModuleAgents()) {
+            mSettingsManager.setToDefault(
+                    SettingsManager.getModuleSettingScope(agent.getScopeNamespace()),
+                    Keys.KEY_CAMERA_ID);
+        }
+
         mResolutionSetting = new ResolutionSetting(mSettingsManager, mOneCameraManager,
                 getContentResolver());
 
